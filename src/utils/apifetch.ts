@@ -1,11 +1,12 @@
-const apiFetch = async <Response>(url = '', method = 'POST', data = {}): Promise<Response> => {
+const apiFetch = async <Response>(url = '', method = 'POST', data = {}, headers = {}): Promise<Response> => {
   // Default options are marked with *
   const response = await fetch(url, {
     method,
     headers: {
       'Content-Type': 'application/json',
+      ...headers,
     },
-    body: JSON.stringify(data),
+    ...method !== 'GET' && { body: JSON.stringify(data) },
   });
   return response.json();
 };
