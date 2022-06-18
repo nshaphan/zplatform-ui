@@ -19,7 +19,6 @@ function App() {
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<p>hello</p>} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login-link/:token" element={<LoginWithLink />} />
@@ -27,6 +26,7 @@ function App() {
           <Route path="/otp-login/:id" element={<OtpLogin />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="*" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
