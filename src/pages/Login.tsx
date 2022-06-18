@@ -62,11 +62,6 @@ export default function Login() {
   const onSubmit: SubmitHandler<LoginInput> = async (input) => {
     if (isPasswordLogin) {
       const response = await apiFetch<LoginResponse>(`${config.API_URL}/login`, 'POST', input);
-      if (response.errors) {
-        response.errors.forEach((error) => {
-          setError(error.param, { type: 'manual', message: error.msg });
-        });
-      }
       if (response.success) {
         if (!response.data?.user.isTwoFactorEnabled) {
           setToken({
@@ -145,6 +140,7 @@ export default function Login() {
                 fullWidth
                 id="email"
                 label="Email Address"
+                inputProps={{ 'data-testid': 'email' }}
                 error={!!errors.email}
                 helperText={errors.email?.message}
                 {...register('email')}
@@ -159,6 +155,7 @@ export default function Login() {
                   label="Password"
                   type="password"
                   id="password"
+                  inputProps={{ 'data-testid': 'password' }}
                   error={!!errors.password}
                   helperText={errors.password?.message}
                   autoComplete="current-password"
@@ -173,6 +170,7 @@ export default function Login() {
             fullWidth
             variant="contained"
             color="primary"
+            data-testid="loginBtn"
             sx={{
               margin: theme.spacing(3, 0, 2),
             }}
@@ -192,6 +190,7 @@ export default function Login() {
                 margin: theme.spacing(3, 0, 2),
               }}
               onClick={() => setIsPasswordLogin(!isPasswordLogin)}
+              data-testid="loginwithoutPassBtn"
             >
               {isPasswordLogin ? 'Login Without Password' : 'Login Password'}
             </Button>

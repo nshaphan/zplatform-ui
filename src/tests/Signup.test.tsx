@@ -13,17 +13,10 @@ import SignUp from '../pages/Signup';
 
 const navigate = jest.fn();
 
-describe('App Component', () => {
+describe('Signup Component', () => {
   beforeEach(() => {
     fetch.resetMocks();
     jest.spyOn(router, 'useNavigate').mockImplementation(() => navigate);
-  });
-
-  it('Should render successfully', async () => {
-    render(<App />);
-    await waitFor(() => {
-      screen.getByText('Sign In');
-    });
   });
 
   it('Should render signup page and user create an account', async () => {
@@ -58,7 +51,7 @@ describe('App Component', () => {
     await act(async () => {
       fireEvent.click(screen.getByTestId('signupBtn'));
     });
-    // expect(navigate).toBeCalledWith('/login');
+    expect(navigate).toBeCalledWith('/login');
   });
 
   it('Should render errors', async () => {
