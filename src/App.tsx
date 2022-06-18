@@ -9,7 +9,10 @@ import Login from './pages/Login';
 import LoginWithLink from './pages/LoginWithLink';
 import Profile from './pages/Profile';
 import SignUp from './pages/Signup';
+import OtpLogin from './pages/OtpLogin';
 import theme from './theme';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
   return (
@@ -21,6 +24,9 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login-link/:token" element={<LoginWithLink />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/otp-login/:id" element={<OtpLogin />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

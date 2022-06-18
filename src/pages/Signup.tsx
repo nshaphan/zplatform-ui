@@ -9,6 +9,8 @@ import {
   TextField,
   Button,
   useTheme,
+  FormControlLabel,
+  Checkbox,
 } from '@mui/material';
 import { Box } from '@mui/system';
 import * as yup from 'yup';
@@ -32,6 +34,7 @@ export default function SignUp() {
     email: yup.string().required('Email is required'),
     password: yup.string().required('Password is required'),
     confirmPassword: yup.string().required('Confirmation password is required'),
+    isTwoFactorEnabled: yup.boolean(),
   });
 
   interface ProfileInput {
@@ -44,12 +47,15 @@ export default function SignUp() {
     email: string;
     password: string;
     confirmPassword: string;
+    isTwoFactorEnabled: boolean;
   }
 
   type Field =
    'firstName'
   | 'lastName' | 'gender'
-   | 'dateOfBirth' | 'maritalStatus' | 'nationality' | 'email' | 'password' | 'confirmPassword'
+   | 'dateOfBirth' | 'maritalStatus'
+   | 'nationality' | 'email' | 'password'
+   | 'confirmPassword' | 'isTwoFactorEnabled'
 
   interface BackendError {
     msg: string,
@@ -238,6 +244,12 @@ export default function SignUp() {
                 error={!!errors.confirmPassword}
                 helperText={errors.confirmPassword?.message}
                 {...register('confirmPassword')}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={<Checkbox value="true" color="primary" {...register('isTwoFactorEnabled')} />}
+                label="Enable two-factor authentication, for enhanced security."
               />
             </Grid>
           </Grid>

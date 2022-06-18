@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { Box } from '@mui/system';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import apiFetch from '../utils/apifetch';
 import config from '../config/config';
 import useToken from '../utils/useToken';
@@ -47,6 +47,10 @@ export default function Login() {
     message?: string,
     data?: {
       token: string,
+      user: {
+        id: number,
+        isTwoFactorEnabled: boolean,
+      }
     }
   }
 
@@ -64,10 +68,14 @@ export default function Login() {
         });
       }
       if (response.success) {
-        setToken({
-          token: response?.data?.token || '',
-        });
-        navigate('/profile');
+        if (!response.data?.user.isTwoFactorEnabled) {
+          setToken({
+            token: response?.data?.token || '',
+          });
+          navigate('/profile');
+        } else {
+          navigate(`/otp-login/${response.data?.user.id}`);
+        }
       } else {
         setAlert({
           severerity: 'error',
@@ -200,7 +208,7 @@ export default function Login() {
               <Link to="/signup" component={RouterLink} variant="body2">
                 Create New Account
               </Link>
-              <Link to="/signup" component={RouterLink} variant="body2">
+              <Link to="/forgot-password" component={RouterLink} variant="body2">
                 Forgot Password?
               </Link>
             </Grid>
