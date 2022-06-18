@@ -39,7 +39,7 @@ interface UpdateResponse {
   }
 
 interface Props {
-    id: string;
+    id: number;
     getUserProfile: () => void;
 }
 
@@ -48,7 +48,7 @@ export default function VerifyDialog(props: Props) {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
 
-  const [userId, setUserId] = React.useState('');
+  const [userId, setUserId] = React.useState(0);
 
   React.useEffect(() => {
     setUserId(id);
@@ -76,7 +76,7 @@ export default function VerifyDialog(props: Props) {
   const onSubmit: SubmitHandler<ProfileInput> = async (input) => {
     const data = new FormData();
 
-    data.append('id', userId);
+    data.append('id', userId.toString());
     data.append('documentType', input.documentType);
     data.append('idNumber', input.idNumber);
     data.append('documentAttachment', input.documentAttachment[0]);

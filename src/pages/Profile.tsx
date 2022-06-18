@@ -25,7 +25,7 @@ import useToken from '../utils/useToken';
 import VerifyDialog from '../components/VerifyDialog';
 
 interface ProfileData {
-    id?: string;
+    id?: number;
       profilePhoto?: string;
       firstName?: string;
       lastName?: string;
@@ -75,6 +75,16 @@ export default function Profile() {
     getUseProfile();
   }, []);
 
+  const verifyProfile = async (id: number) => {
+    const response = await apiFetch<ProfileResponse>(`${config.API_URL}/verify-profile`, 'POST', {
+      id,
+    });
+
+    if (response.success) {
+      getUseProfile();
+    }
+  };
+
   if (!isValid) {
     return <Navigate to="/login" />;
   }
@@ -106,6 +116,7 @@ export default function Profile() {
               justifyContent: 'right',
             }}
           >
+            {profile?.status === 'PENDING' ? (<Button onClick={() => verifyProfile(profile?.id || 0)}>Mark As Verified</Button>) : ''}
             <Button onClick={() => logout()}>Logout</Button>
           </Box>
           <Card
@@ -131,9 +142,17 @@ export default function Profile() {
               <Typography
                 variant="h6"
                 align="center"
+                sx={{
+                  verticalAlign: 'middle',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
               >
                 {`${profile?.firstName} ${profile?.lastName}`}
-                <CheckCircleIcon />
+                {profile?.status === 'VERIFIED' ? (
+                  <CheckCircleIcon sx={{ marginLeft: theme.spacing(1) }} color="info" />
+                ) : ''}
               </Typography>
               <Typography
                 variant="subtitle1"
@@ -162,7 +181,7 @@ export default function Profile() {
                   }}
                 >
                   Your account is not verified
-                  <VerifyDialog id={profile?.id || ''} getUserProfile={getUseProfile} />
+                  <VerifyDialog id={profile?.id || 0} getUserProfile={getUseProfile} />
                 </Alert>
               ) : ''}
 
