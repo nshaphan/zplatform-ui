@@ -18,6 +18,7 @@ import {
 } from '@mui/material';
 import { Box } from '@mui/system';
 import { Navigate } from 'react-router-dom';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import apiFetch from '../utils/apifetch';
 import config from '../config/config';
 import useToken from '../utils/useToken';
@@ -132,6 +133,7 @@ export default function Profile() {
                 align="center"
               >
                 {`${profile?.firstName} ${profile?.lastName}`}
+                <CheckCircleIcon />
               </Typography>
               <Typography
                 variant="subtitle1"

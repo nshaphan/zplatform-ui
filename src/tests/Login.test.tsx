@@ -7,6 +7,7 @@ import { ThemeProvider } from '@emotion/react';
 import { BrowserRouter } from 'react-router-dom';
 import { act } from 'react-dom/test-utils';
 import * as router from 'react-router';
+import fetch from 'jest-fetch-mock';
 import Login from '../pages/Login';
 
 const navigate = jest.fn();
