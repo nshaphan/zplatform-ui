@@ -13,17 +13,18 @@ import {
   Grid,
   Divider,
   Alert,
-  Link,
   Button,
+  Link,
 } from '@mui/material';
 import { Box } from '@mui/system';
-import { Link as RouterLink, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import apiFetch from '../utils/apifetch';
 import config from '../config/config';
 import useToken from '../utils/useToken';
+import VerifyDialog from '../components/VerifyDialog';
 
 interface ProfileData {
-    id?: number;
+    id?: string;
       profilePhoto?: string;
       firstName?: string;
       lastName?: string;
@@ -59,16 +60,18 @@ export default function Profile() {
     message: string
   }|null>(null);
 
-  useEffect(() => {
-    const getUseProfile = async (): Promise<ProfileResponse> => apiFetch<ProfileResponse>(`${config.API_URL}/profile`, 'GET', {}, {
+  const getUseProfile = () => {
+    apiFetch<ProfileResponse>(`${config.API_URL}/profile`, 'GET', {}, {
       authorization: token,
-    });
-
-    getUseProfile().then((res) => {
+    }).then((res) => {
       if (res.success) {
         setProfile(res.data?.user || null);
       }
     });
+  };
+
+  useEffect(() => {
+    getUseProfile();
   }, []);
 
   if (!isValid) {
@@ -157,9 +160,19 @@ export default function Profile() {
                   }}
                 >
                   Your account is not verified
-                  <Link sx={{ marginLeft: theme.spacing(2) }} to="/signup" component={RouterLink} variant="body2">
-                    Click Here to verify
-                  </Link>
+                  <VerifyDialog id={profile?.id || ''} getUserProfile={getUseProfile} />
+                </Alert>
+              ) : ''}
+
+              {profile?.status === 'PENDING' ? (
+                <Alert
+                  severity="info"
+                  sx={{
+                    textAlign: 'center',
+                    marginTop: theme.spacing(2),
+                  }}
+                >
+                  We are reviewing your profile information.
                 </Alert>
               ) : ''}
 
@@ -212,6 +225,22 @@ export default function Profile() {
                   {' '}
                   {profile?.idNumber || 'N/A'}
                 </Grid>
+                {profile?.documentAttachment ? (
+                  <Grid item xs={12}>
+                    <Typography
+                      sx={{
+                        fontWeight: 600,
+                        textAlign: 'center',
+                        marginTop: theme.spacing(2),
+                      }}
+                      component="div"
+                    >
+                      <Link target="_blank" href={`${config.API_URL}/media/${profile?.documentAttachment}`}>View ID Document</Link>
+
+                    </Typography>
+                  </Grid>
+                ) : ''}
+
               </Grid>
             </CardContent>
           </Card>
