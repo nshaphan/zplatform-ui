@@ -121,12 +121,12 @@ export default function SignUp() {
                 required
                 fullWidth
                 id="firstName"
-                label="First Name"
+                label="FirstName"
                 autoFocus
                 error={!!errors.firstName}
                 helperText={errors.firstName?.message}
+                inputProps={{ 'data-testid': 'firstname' }}
                 {...register('firstName')}
-
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -138,6 +138,7 @@ export default function SignUp() {
                 label="Last Name"
                 error={!!errors.lastName}
                 helperText={errors.lastName?.message}
+                inputProps={{ 'data-testid': 'lastname' }}
                 {...register('lastName')}
               />
             </Grid>
@@ -150,6 +151,7 @@ export default function SignUp() {
                 label="Email Address"
                 error={!!errors.email}
                 helperText={errors.email?.message}
+                inputProps={{ 'data-testid': 'email' }}
                 {...register('email')}
               />
             </Grid>
@@ -168,6 +170,7 @@ export default function SignUp() {
                 }}
                 error={!!errors.dateOfBirth}
                 helperText={errors.dateOfBirth?.message}
+                inputProps={{ 'data-testid': 'dateOfBirth' }}
                 {...register('dateOfBirth')}
               />
             </Grid>
@@ -181,6 +184,7 @@ export default function SignUp() {
                 fullWidth
                 error={!!errors.gender}
                 helperText={errors.gender?.message}
+                inputProps={{ 'data-testid': 'gender' }}
                 {...register('gender')}
               >
                 <option>Male</option>
@@ -198,6 +202,7 @@ export default function SignUp() {
                 fullWidth
                 error={!!errors.maritalStatus}
                 helperText={errors.maritalStatus?.message}
+                inputProps={{ 'data-testid': 'maritalStatus' }}
                 {...register('maritalStatus')}
               >
                 <option value="SINGLE">Single</option>
@@ -216,6 +221,7 @@ export default function SignUp() {
                 id="nationality"
                 error={!!errors.nationality}
                 helperText={errors.nationality?.message}
+                inputProps={{ 'data-testid': 'nationality' }}
                 {...register('nationality')}
               />
             </Grid>
@@ -226,6 +232,7 @@ export default function SignUp() {
                 fullWidth
                 label="Password"
                 type="password"
+                inputProps={{ 'data-testid': 'password' }}
                 id="password"
                 error={!!errors.password}
                 helperText={errors.password?.message}
@@ -241,6 +248,7 @@ export default function SignUp() {
                 label="Confirm Password"
                 type="password"
                 id="confirm-password"
+                inputProps={{ 'data-testid': 'confirmPassword' }}
                 error={!!errors.confirmPassword}
                 helperText={errors.confirmPassword?.message}
                 {...register('confirmPassword')}
@@ -261,6 +269,7 @@ export default function SignUp() {
             sx={{
               margin: theme.spacing(3, 0, 2),
             }}
+            data-testid="signupBtn"
           >
             Sign Up
           </Button>
