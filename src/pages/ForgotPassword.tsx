@@ -91,7 +91,7 @@ export default function ForgotPassword() {
         }}
       >
         <Typography component="h1" variant="h5">
-          Sign In
+          Forgot Password
         </Typography>
         <Box
           component="form"
@@ -121,7 +121,7 @@ export default function ForgotPassword() {
                 required
                 fullWidth
                 id="otp"
-                label="Enter the code sent on email"
+                label="Enter your email"
                 error={!!errors.email}
                 helperText={errors.email?.message}
                 {...register('email')}
